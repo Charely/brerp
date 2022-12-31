@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.po.mapper.ScmmatreceiptreqMapper">
+
+    <select id="getReferMatreceiptList" resultType="org.br.erp.po.vo.ScmReferMatreceiptreqVo">
+        select head.id as billid,head.billcode,head.billdate,item.id as itemid,item.materialid,
+        material.materialcode,material.materialname,item.qty as matreceiptreqqty,
+        scmpoitem.qty as poqty,scmpo.billcode as ordercode,
+        head.vendorid,scmpartner.partnercode as vendorcode,scmpartner.partnername as vendorname,
+        item.receiptqty
+        from scmmatreceiptreq head
+        INNER JOIN scmmatreceiptreqitem item on head.id=item.parentid and item.receiptflag !='2'
+        inner join material on material.id=item.materialid
+        left join scmpoitem on scmpoitem.id=item.fromitemid
+        left join scmpo on scmpo.id=scmpoitem.parentid and scmpoitem.parentid=scmpo.id
+        left join scmpartner on scmpartner.id=head.vendorid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

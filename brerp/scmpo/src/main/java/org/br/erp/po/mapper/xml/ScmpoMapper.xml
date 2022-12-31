@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.po.mapper.ScmpoMapper">
+
+    <select id="getReferList" resultType="org.br.erp.po.vo.ScmMatReceiptReferPoVo">
+        select scmpo.id as billid,scmpo.billcode,scmpo.podate as billdate,scmpo.vendorid,scmpartner.partnercode as vendorcode,
+        scmpartner.partnername as vendorname,scmpoitem.materialid,material.materialcode,scmpoitem.returnqty,
+        material.materialname ,scmpoitem.qty as poqty,scmpoitem.receiptreqqty,
+        scmpoitem.id as itemid,scmpoitem.receiptqty,scmpoitem.invoiceqty,scmpo.isred
+        from scmpo
+        inner join scmpoitem on scmpo.id=scmpoitem.parentid
+        inner join material on material.id=scmpoitem.materialid
+        left join scmpartner on scmpartner.id = scmpo.vendorid
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="getPuinvoiceReferPoList" resultType="org.br.erp.po.vo.ScmMatReceiptReferPoVo">
+        select scmpo.id as billid,scmpo.billcode,scmpo.podate as billdate,scmpo.vendorid,scmpartner.partnercode as vendorcode,
+        scmpartner.partnername as vendorname,scmpoitem.materialid,scmpoitem.materialcode,scmpoitem.returnqty,
+        scmpoitem.materialname ,scmpoitem.qty as poqty,scmpoitem.receiptreqqty,
+        scmpoitem.id as itemid,scmpoitem.receiptqty,scmpoitem.invoiceqty,scmpo.isred
+        from scmpo
+        inner join scmpoitem on scmpo.id=scmpoitem.parentid
+        left join material on material.id=scmpoitem.materialid
+        left join scmpartner on scmpartner.id = scmpo.vendorid
+        ${ew.customSqlSegment}
+    </select>
+
+
+
+    <select id="getvendorReferlist" resultType="org.br.erp.po.vo.ScmVendorReferPoVo">
+        select scmpo.id as billid,scmpo.billcode,scmpo.podate as billdate,scmpo.vendorid,scmpartner.partnercode as vendorcode,
+        scmpartner.partnername as vendorname,scmpoitem.materialid,material.materialcode,
+        material.materialname ,scmpoitem.qty as poqty ,scmpoitem.receiptreqqty,scmpoitem.id as itemid,
+        '' as imgsrc
+        from scmpo
+        inner join scmpoitem on scmpo.id=scmpoitem.parentid and scmpoitem.receiptreqflag !='2'
+        left join material on material.id=scmpoitem.materialid
+        left join scmpartner on scmpartner.id = scmpo.vendorid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

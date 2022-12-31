@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.outsource.mapper.ScmoutsourceMapper">
+
+    <select id="getreceiptreqreferlist" resultType="org.br.erp.outsource.vo.ScmReceiptReqReferWwVo">
+        select item.id as itemid,head.id as id,head.companyid,head.billcode
+        ,head.billdate ,head.vendorid,scmpartner.partnercode as vendorcode,
+        scmpartner.partnername as vendorname,material.materialcode,material.materialname,
+        item.qty,item.receiptreqqty,item.receiptqty
+        from scmoutsourceitem item
+        inner join scmoutsource head ON head.id= item.parentid
+        left join material on material.id=item.materialid
+        left join scmpartner on scmpartner.id=head.vendorid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

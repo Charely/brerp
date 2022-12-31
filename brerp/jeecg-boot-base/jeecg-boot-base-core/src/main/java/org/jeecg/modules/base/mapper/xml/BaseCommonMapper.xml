@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.base.mapper.BaseCommonMapper">
+
+    <!-- 保存日志11 -->
+    <insert id="saveLog" parameterType="Object">
+        insert into sys_log (id, log_type, log_content, method, operate_type, request_url, request_type, request_param, ip, userid, username, cost_time, create_time,create_by)
+        values(
+            #{dto.id,jdbcType=VARCHAR},
+            #{dto.logType,jdbcType=INTEGER},
+            #{dto.logContent,jdbcType=VARCHAR},
+            #{dto.method,jdbcType=VARCHAR},
+            #{dto.operateType,jdbcType=INTEGER},
+            #{dto.requestUrl,jdbcType=VARCHAR},
+            #{dto.requestType,jdbcType=VARCHAR},
+            #{dto.requestParam,jdbcType=VARCHAR},
+            #{dto.ip,jdbcType=VARCHAR},
+            #{dto.userid,jdbcType=VARCHAR},
+            #{dto.username,jdbcType=VARCHAR},
+            #{dto.costTime,jdbcType=BIGINT},
+            #{dto.createTime,jdbcType=TIMESTAMP},
+            #{dto.createBy,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="createTmpTable" parameterType="String">
+        CREATE TEMPORARY TABLE IF NOT EXISTS ${tablename}(
+        id VARCHAR(100) NULL);
+    </update>
+
+    <insert id="inserttotmptable" parameterType="java.util.List">
+        INSERT INTO tmptable
+        values
+        <foreach collection="p" item="value" open="" close="" separator=",">
+            (
+              #{value}
+            )
+        </foreach>
+
+    </insert>
+
+    <update id="droptmptable" parameterType="String">
+        drop table  if exists ${tablename};
+    </update>
+
+    <select id="selectCustomCode" parameterType="String" resultType="org.jeecg.modules.base.objectEntity.CustomEntity">
+        select customcode as customCode,customname as customName,objecttable as objectTable  from scmcustomfields
+        inner join scmobject  on scmcustomfields.scmobjectid =scmobject.id where scmobject.objectcode = #{objectcode};
+    </select>
+
+
+    <select id="selecttablevalue" parameterType="String" resultType="String">
+        select ${tablecode} from ${tablename} where  ${tableid}=#{tableidvalue};
+    </select>
+
+</mapper>

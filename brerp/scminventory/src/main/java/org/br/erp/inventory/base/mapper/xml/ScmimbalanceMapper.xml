@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.inventory.base.mapper.ScmimbalanceMapper">
+
+    <select id="getBalanceAmount" resultType="org.br.erp.inventory.base.vo.ScmimbalanceVo">
+        select scmimbalance.id,
+        material.materialcode,
+        material.materialname,
+        warehouse.code as warehousecode,
+        warehouse.name as warehousename,
+        scmimbalance.companyid,
+        sys_depart.depart_name as companyname,
+        scmimbalance.beginyearqty,
+        scmimbalance.beginmonthqty,
+        scmimbalance.inamount,
+        scmimbalance.outamount,
+        scmimbalance.endyearqty,
+        scmimbalance.amount,
+        scmpartner.partnercode as vendorcode,
+        scmpartner.partnername as vendorname,
+        scmimbalance.balancedate,
+        scmimbalance.batchid as batchid,
+        scmbatch.batchcode as batchcode,
+        scmstocktype.stockname,
+        scminventorykinds.kindname,
+        scmimbalance.stocklocationid ,scmstocklocation.locationname as stocklocationname
+        from scmimbalance
+        left join material on scmimbalance.materialid=material.id
+        left join warehouse on warehouse.id=scmimbalance.warehouseid
+        left join scmpartner on scmpartner.id=scmimbalance.vendorid
+        left join scmbatch on scmbatch.id=scmimbalance.batchid
+        left join scmstocktype on scmstocktype.stockcode=scmimbalance .stocktypeid
+        left join scminventorykinds on scminventorykinds .kindcode=scmimbalance .inventorykindid
+        left join scmstocklocation on scmstocklocation.id = scmimbalance.stocklocationid
+        left join sys_depart on sys_depart.id=scmimbalance.companyid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

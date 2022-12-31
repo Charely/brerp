@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.outsource.mapper.ScmoutsourceitemMapper">
+
+	<delete id="deleteByMainId" parameterType="java.lang.String">
+		DELETE 
+		FROM  scmoutsourceitem 
+		WHERE
+			 parentid = #{mainId} 	</delete>
+	
+	<select id="selectByMainId" parameterType="java.lang.String" resultType="org.br.erp.outsource.entity.Scmoutsourceitem">
+		SELECT * 
+		FROM  scmoutsourceitem
+		WHERE
+			 parentid = #{mainId} 	</select>
+</mapper>

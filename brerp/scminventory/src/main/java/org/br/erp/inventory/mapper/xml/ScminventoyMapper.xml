@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.inventory.mapper.ScminventoyMapper">
+
+    <select id="getReferInstockData" resultType="org.br.erp.inventory.vo.ScmPoInvoiceReferInstock">
+        select head.id,item.id as itemid,material.id,material.materialcode,material.materialname,
+        head.billcode,head.billdate,scmpartner.partnercode as vendorcode,scmpartner.partnername as vendorname,item.qty,
+        item.invoiceqty,item.taxinprice,item.taxrate,item.taxexprice
+        from scminventoryitem item
+        left join scminventoy head on head.id=item.parentid
+        left join sys_depart on sys_depart.id=head.invdepartid
+        left join sys_user on sys_user.id=head.invemployid
+        left join material on material.id=item.materialid
+        left join scmpartner on scmpartner.id=head.vendorid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

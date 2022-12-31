@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.pr.mapper.ScmprMapper">
+
+    <select id="getPrReferList" resultType="org.br.erp.pr.vo.ScmprReferVo">
+        select head.id as mainid,head.prcode,head.create_by as createby,sysdepart .depart_name as departname,sysuser.realname as emptname,
+        item.id as itemid,item.materialcode ,item.materialname ,item.qty ,
+        item.prorder_date as orderdate,item.taxinprice ,item.taxinvalue,head.prdate,item.prdate as preqdate
+        from scmpr head
+        inner join scmpritem item on head.id=item.parentid and head.status='2' and item.ispo='0'
+        left join material on material.id=item.materialid
+        left join sys_depart sysdepart on head.prdept=sysdepart .id
+        left join sys_user  sysuser on sysuser .id=head.prempid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

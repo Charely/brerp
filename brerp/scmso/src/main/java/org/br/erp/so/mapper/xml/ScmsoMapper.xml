@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.br.erp.so.mapper.ScmsoMapper">
+
+    <select id="getReferSOlist" resultType="org.br.erp.so.vo.ScmOutStockReferSoVo">
+        select
+        scmso.id as mainid,scmsoitem.id as itemid,scmso.billcode,scmso.billdate,
+        scmso.remarks,scmsoitem.materialid,material.materialcode,material.materialname,
+        scmsoitem.qty as soqty,scmsoitem.outqty,scmpartner.partnercode as customercode,
+        scmpartner.partnername as customername,scmso.isred,scmso.customerid,
+        scmsoitem.returnqty,scmsoitem.invoiceqty
+        from scmso
+        inner join scmsoitem on scmso.id=scmsoitem.parentid
+        inner join material on scmsoitem.materialid = material.id
+        left  join scmuom on scmuom.id=material.uom
+        left  join scmpartner on scmpartner.id=scmso.customerid
+        ${ew.customSqlSegment}
+    </select>
+</mapper>
