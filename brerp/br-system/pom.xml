@@ -46,11 +46,11 @@
 			<groupId>org.jeecgframework.boot</groupId>
 			<artifactId>hibernate-re</artifactId>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.jeecgframework.boot</groupId>
 			<artifactId>erpflowable</artifactId>
 			<version>3.3.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.jeecgframework.boot</groupId>
 			<artifactId>scmbase</artifactId>
