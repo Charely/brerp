@@ -16,8 +16,6 @@ import org.br.erp.pr.entity.Scmpreqitem;
 import org.br.erp.pr.mapper.ScmpreqMapper;
 import org.br.erp.pr.mapper.ScmpreqitemMapper;
 import org.br.erp.pr.service.IScmpreqService;
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.repository.ProcessDefinition;
 import org.jeecg.common.api.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,9 +46,9 @@ public class ScmpreqServiceImpl extends ServiceImpl<ScmpreqMapper, Scmpreq> impl
 	private MaterialMapper materialMapper;
 
 
-	@Autowired
-	RepositoryService repositoryService;
-
+//
+//	@Autowired
+//	RepositoryService repositoryService;
 
 	@Autowired
 	IScmbillcoderuleService scmbillcoderuleService;
@@ -58,21 +56,22 @@ public class ScmpreqServiceImpl extends ServiceImpl<ScmpreqMapper, Scmpreq> impl
 	@Override
 	public Result audit(String dataid) {
 		//现将单据与流程定义进行关联
-		Scmpreq scmpreq = scmpreqMapper.selectById(dataid);
-		ProcessDefinition scmpreqdefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionCategory("scmpreq").active().latestVersion().singleResult();
-		if(scmpreqdefinition!=null){
-			String id = scmpreqdefinition.getId();
-			String key = scmpreqdefinition.getKey();
-			//flowCommonService.initActBusiness(scmpreq.getPreqcode()+"审批",dataid,"scmpreqservice",key,id);
-			HashMap<String, Object> variables = new HashMap<>();
-			variables.put("dataId",dataid);
-		//	Result result = flowDefinitionService.startProcessInstanceByDataId(dataid, variables);
-			//return result;
-			return Result.ok("");
-		}else{
-			return Result.error("启动失败");
-		}
+//		Scmpreq scmpreq = scmpreqMapper.selectById(dataid);
+//		//ProcessDefinition scmpreqdefinition = repositoryService.createProcessDefinitionQuery()
+//				.processDefinitionCategory("scmpreq").active().latestVersion().singleResult();
+//		if(scmpreqdefinition!=null){
+//			String id = scmpreqdefinition.getId();
+//			String key = scmpreqdefinition.getKey();
+//			//flowCommonService.initActBusiness(scmpreq.getPreqcode()+"审批",dataid,"scmpreqservice",key,id);
+//			HashMap<String, Object> variables = new HashMap<>();
+//			variables.put("dataId",dataid);
+//		//	Result result = flowDefinitionService.startProcessInstanceByDataId(dataid, variables);
+//			//return result;
+//			return Result.ok("");
+//		}else{
+//			return Result.error("启动失败");
+//		}
+		return Result.ok("");
 	}
 
 	@Override
