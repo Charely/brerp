@@ -30,8 +30,6 @@ import org.br.erp.price.mapper.PricelineMapper;
 import org.br.erp.price.service.IPricelineService;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.RedisUtil;
-import org.jeecg.modules.flowable.apithird.business.entity.FlowMyBusiness;
-import org.jeecg.modules.flowable.apithird.service.FlowCallBackServiceI;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +53,7 @@ import java.util.stream.Stream;
  */
 @Service("scmprservice")
 public class ScmprServiceImpl extends ServiceImpl<ScmprMapper, Scmpr> implements
-		IScmprService, FlowCallBackServiceI, writebackpr {
+		IScmprService, writebackpr {
 
 	@Autowired
 	private ScmprMapper scmprMapper;
@@ -437,35 +435,35 @@ public class ScmprServiceImpl extends ServiceImpl<ScmprMapper, Scmpr> implements
 	}
 
 
-	@Override
-	@Transactional
-	public void afterFlowHandle(FlowMyBusiness business) {
-		if(business.getTaskId().isEmpty())
-		{
-			Scmpr scmpr = scmprMapper.selectById(business.getDataId());
-			scmpr.setStatus("2");
-			scmprMapper.updateById(scmpr);
-		}else {
-			Scmpr scmpr = scmprMapper.selectById(business.getDataId());
-			scmpr.setStatus("1");
-			scmprMapper.updateById(scmpr);
-		}
-	}
+//	@Override
+//	@Transactional
+//	public void afterFlowHandle(FlowMyBusiness business) {
+//		if(business.getTaskId().isEmpty())
+//		{
+//			Scmpr scmpr = scmprMapper.selectById(business.getDataId());
+//			scmpr.setStatus("2");
+//			scmprMapper.updateById(scmpr);
+//		}else {
+//			Scmpr scmpr = scmprMapper.selectById(business.getDataId());
+//			scmpr.setStatus("1");
+//			scmprMapper.updateById(scmpr);
+//		}
+//	}
 
-	@Override
-	public Object getBusinessDataById(String dataId) {
-		return null;
-	}
-
-	@Override
-	public Map<String, Object> flowValuesOfTask(String taskNameId, Map<String, Object> values) {
-		return null;
-	}
-
-	@Override
-	public List<String> flowCandidateUsernamesOfTask(String taskNameId, Map<String, Object> values) {
-		return null;
-	}
+//	@Override
+//	public Object getBusinessDataById(String dataId) {
+//		return null;
+//	}
+//
+//	@Override
+//	public Map<String, Object> flowValuesOfTask(String taskNameId, Map<String, Object> values) {
+//		return null;
+//	}
+//
+//	@Override
+//	public List<String> flowCandidateUsernamesOfTask(String taskNameId, Map<String, Object> values) {
+//		return null;
+//	}
 
 	@Override
 	@Transactional
