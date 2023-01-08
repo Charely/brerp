@@ -338,11 +338,9 @@ export const JeecgListMixin = {
           ids += this.selectedRowKeys[a] + ",";
         }
         var that = this;
-        this.$confirm({
-          title: "确认删除",
-          content: "是否删除选中数据?",
-          onOk: function () {
-            that.loading = true;
+         this.$confirm("确认是否删除所选单据？",{type:"error"}).then(()=>{
+         // console.log("确认操作");
+          that.loading = true;
             deleteAction(that.url.deleteBatch, {ids: ids}).then((res) => {
               if (res.success) {
                 //重新计算分页问题
@@ -356,8 +354,10 @@ export const JeecgListMixin = {
             }).finally(() => {
               that.loading = false;
             });
-          }
-        });
+        }).catch(()=>{
+         // console.log("取消操作");
+        })
+      }
       }
     },
     handleDelete: function (id) {
