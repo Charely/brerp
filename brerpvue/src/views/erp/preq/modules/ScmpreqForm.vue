@@ -2,10 +2,6 @@
   <a-card>
     <a-spin :spinning="confirmLoading">
       <div>
-        <act-handle-btn :type="0" :taskId="audittaskid" :dataId="model.id" v-if="auditDisabled" text="通过">
-        </act-handle-btn>
-        <act-handle-btn :type="1" :taskId="audittaskid" :dataId="model.id" v-if="auditDisabled" text="驳回">
-        </act-handle-btn>
       </div>
       <div>
         <j-form-container :disabled="formDisabled">
